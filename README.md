@@ -1,4 +1,4 @@
-# Geolocation Data Processor
+# Geo Project
 
 ## Introduction
 This project is a small backend application built with Node.js that processes geolocation data in the form of routes travelled by vehicles. The geolocation data is contained in a file named `data.json`, with each route comprising a series of location points specified by longitude and latitude coordinates along with a timestamp.
