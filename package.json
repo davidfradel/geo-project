@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "David Fradel",
   "license": "ISC",
@@ -13,5 +13,10 @@
     "express": "^4.18.2",
     "geolocation-utils": "^1.2.5",
     "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.2.0"
   }
 }

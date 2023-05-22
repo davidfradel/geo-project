@@ -18,8 +18,6 @@ app.get('/routes/:id', (req, res) => {
   const { id } = req.params;
   const route = routesInJson.find(route => route.id === id);
 
-  console.log('route', route)
-
   if (!route) {
     return res.status(404).json({ error: 'Route not found' });
   }
@@ -29,13 +27,34 @@ app.get('/routes/:id', (req, res) => {
 
 app.get('/distance', (req, res) => {
     const { start, end } = req.query;
+
+    if(!start) {
+      return res.status(400).json({ error: 'start parameter is missing' });
+    }
+
+    if(!end) {
+      return res.status(400).json({ error: 'end parameter is missing' });
+    }
+
+    if(new Date(end) <= new Date(start)){
+      return res.status(400).json({ error: 'end parameter should be in the future of start parameter' });
+    }
+
+    const startTimestamp = new Date(start);
+    const endTimestamp = new Date(end);
+
+    if(isNaN(startTimestamp.getTime())) {
+      return res.status(400).json({ error: 'start parameter is an invalid date' });
+    }
+
+    if(isNaN(endTimestamp.getTime())) {
+      return res.status(400).json({ error: 'end parameter is an invalid date' });
+    }
   
     let totalDistance = 0;
     routesInJson.forEach(route => {
       const routeTimestamp = new Date(route.timestamp);
-      const startTimestamp = new Date(start);
-      const endTimestamp = new Date(end);
-  
+
       if (routeTimestamp >= startTimestamp && routeTimestamp <= endTimestamp) {
         let distance = 0;
         for (let i = 0; i < route.locations.length - 1; i++) {
@@ -52,3 +71,5 @@ app.get('/distance', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
+
+module.exports = app;
